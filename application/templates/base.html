@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tmlt</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+	<style>
+		html {
+		  scroll-behavior: smooth;
+		}
+	</style>
+	<div class="position-sticky bg-dark p-2 mb-2" style="left: 0; top: 0; z-index: 100">
+		<button id="leftButton" type="button" class="btn btn-light btn-sm fa fa-navicon" data-toggle="modal" data-target="#sideBar">
+		</button>
+
+		<label class="text-light shadow my-auto">AMOBIT TECH</label>
+	</div>
+
+	<div class="modal left fade" id="sideBar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content rounded-0 border">
+
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Hi</h4>
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+
+				<div class="modal-body">
+					{% include 'main/menu-card.html' %}
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+	{% block body %}
+	{% endblock %}
+</body>
+</html>

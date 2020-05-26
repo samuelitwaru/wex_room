@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="login-content">
+	<form action="{{url_for('room_bp.register_room')}}" method="POST" novalidate>
+		<div class="p-2">
+			<h2>Register Room</h2>
+			<hr>
+			{{form.hidden_tag()}}
+			<div class="form-group">
+				<label>{{form.name.label}} <span class="text-danger">*</span></label>
+				{{form.name(class="form-control")}}
+				{% for error in form.errors.name %}<small class="text-danger">{{error}}</small> {% endfor %}
+			</div>
+
+			<div class="form-group">
+				<label>{{form.pricing_category.label}}</label>
+				{{form.pricing_category(class="form-control")}}
+				{% for error in form.errors.pricing_category %}<small class="text-danger">{{error}}</small> {% endfor %}
+			</div>
+
+			<hr>
+			<div class="form-group">
+				{{form.submit(class="btn btn-success btn-block")}}
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="p-2">
+    <h2>
+        Bookings
+        <button class="btn btn-success float-right" data-toggle="modal" data-target="#newBookingModal"><span class="fa fa-check-square-o">&plus;</span></button>
+    </h2>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="newBookingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" action="">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Booking</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{form.hidden_tag()}}
+                        {{form.errors}}
+                        <div class="form-group">
+                            <label>{{form.room_id.label}}</label>
+                            {{form.room_id(class="form-control", size="5")}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        {{form.submit(class="btn btn-primary")}}
+                    </div>
+                </form>               
+            </div>
+        </div>
+    </div>
+
+    <hr>
+	<table class="table table-responsive-sm border">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+                <th scope="col">Checkin</th>
+                <th scope="col">Checkout</th>
+                <th scope="col">Payments</th>
+                <th scope="col">...</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for booking in bookings %}
+            	<tr>
+            		<td>{{booking.id}}</td>
+            		<td>{{booking.room.name}}</td>
+                    <td>{{booking.book_date|format_date}}</td>
+                    <td>{{booking.checkin_date|format_date}}</td>
+                    <td>{{booking.checkout_date()|format_date}}</td>
+            		<td>{{booking.total_paid()|comma_separator}}</td>
+            		<td>
+    					<div class="dropdown dropright">
+    						<button class="btn btn-sm btn-secondary fa fa-navicon shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+    						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{url_for('payment_bp.register_payment', booking_id=booking.id)}}">Payment</a>
+    							<a class="dropdown-item" href="{{url_for('booking_bp.edit_booking', id=booking.id)}}">Edit</a>
+    							<a class="dropdown-item" href="{{url_for('booking_bp.delete_booking', id=booking.id)}}">Delete</a>
+    						</div>
+    					</div>
+            		</td>
+            	</tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if bookings|length == 0 %}
+        <div class="container" align="center">
+            <label class="display-4 text-muted">No bookings in the system!</label>
+        </div>            
+    {% endif %}
+</div>
+{% endblock %}

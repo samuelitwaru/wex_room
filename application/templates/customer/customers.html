@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="p-2">
+    <h2 class="my-auto">
+        Customers
+        <a href="{{url_for('customer_bp.register_customer')}}" class="btn btn-success float-right"><span class="fa fa-user-plus"></span></a>
+    </h2>
+    <hr>
+	<table class="table table-responsive-sm border">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">...</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                <td>{{customer.id}}</td>
+                <td>{{customer.full_name}}</td>
+                <td>{{customer.telephone}}</td>
+                <td>
+                    <div class="dropdown dropright">
+                        <button class="btn btn-sm btn-secondary fa fa-navicon shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Bookings</a>
+                            <a class="dropdown-item" href="{{url_for('customer_bp.edit_customer', id=customer.id)}}">Edit</a>
+                            <a class="dropdown-item" href="{{url_for('customer_bp.delete_customer', id=customer.id)}}">Delete</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if customers|length == 0 %}
+        <div class="container" align="center">
+            <label class="display-4 text-muted">No customers in the system!</label>
+        </div>            
+    {% endif %}
+</div>
+{% endblock %}

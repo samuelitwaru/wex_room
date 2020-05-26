@@ -1,0 +1,25 @@
+{% extends 'customer/customer.html' %}
+
+{% block content %}
+<div>
+	<form method="post" action="">
+		<div class="p-2">
+			<h2>Delete Customer</h2>
+			<hr>
+			{{form.hidden_tag()}}
+			{{form.id(hidden="true")}}
+			<p>If you delete this customer, {{customer.bookings|length}} booking records will have missing customer records.</p>
+
+			<p>Are you sure you want to delete this customer?</p>
+
+			<hr>
+			
+			<div class="form-group" align="right">
+				<a href="{{url_for('customer_bp.edit_customer', id=customer.id)}}" class="btn btn-secondary">No Cancel</a> 
+				{{form.submit(class="btn btn-danger")}}
+				<!-- <button class="btn btn-danger">Yes</button> -->
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

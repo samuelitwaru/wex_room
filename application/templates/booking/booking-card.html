@@ -1,0 +1,31 @@
+
+	<div class="card p-2" style="width: 18rem;">
+		<div>
+			<div>
+				<h4>Book Status</h4>
+			</div>
+			<hr>
+			<small>Book Number</small>
+			<p><strong>AMOBOOK-123-Z</strong></p>
+			<small>Customer</small>
+			<p><strong>{{booking.customer.full_name}} ({{booking.customer.telephone}})</strong></p>
+			<small>Room</small>
+			<p><strong>{{booking.room.name}}</strong></p>
+			<small>Booked on</small>
+			<p><strong>{{booking.book_date|format_date}}</strong></p>
+			<small>To checkin on</small>
+			<p><strong>{{booking.checkin_date|format_date}}</strong></p>
+			<small>To checkout on</small>
+			<p><strong>{{booking.checkout_date()|format_date}}</strong></p>
+			<small>Duration</small>
+			<p><strong>{{booking.period}} {{booking.pricing_period}}s</strong></p>
+			<small>Pricing</small>
+			<p><strong>{{booking.price_per_period|comma_separator}} PER {{booking.pricing_period}}</strong></p>
+			<p><strong>{{(booking.period*booking.price_per_period)|comma_separator}} FOR {{booking.period}} {{booking.pricing_period}}s</strong></p>
+			
+			<a href="{{url_for('payment_bp.register_payment', booking_id=booking.id)}}" class="btn btn-block btn-primary">Payments</a>
+			<a href="{{url_for('booking_bp.edit_booking', id=booking.id)}}" class="btn btn-block btn-info">Edit</a>
+			<a href="{{url_for('booking_bp.delete_booking', id=booking.id)}}" class="btn btn-block btn-danger">Delete</a>
+
+		</div>
+	</div>

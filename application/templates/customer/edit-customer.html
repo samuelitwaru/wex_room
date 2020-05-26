@@ -1,0 +1,36 @@
+{% extends 'customer/customer.html' %}
+
+{% block content %}
+<div>
+	<form action="" method="POST">
+		<div class="p-2">
+			<h2>Edit Customer</h2>
+			<hr>
+			{{form.hidden_tag()}}
+			<div class="form-group">
+				<label>{{form.full_name.label}}<span class="text-danger">*</span></label>
+				{{form.full_name(class="form-control")}}
+				{% for error in form.errors.full_name %}<small class="text-danger">{{error}}</small> {% endfor %}
+			</div>
+
+			<div class="form-group">
+				<label>{{form.email.label}}</label>
+				{{form.email(class="form-control")}}
+				{% for error in form.errors.email %}<small class="text-danger">{{error}}</small> {% endfor %}
+			</div>
+
+			<div class="form-group">
+				<label>{{form.telephone.label}}</span></label>
+				{{form.telephone(class="form-control")}}
+				{% for error in form.errors.telephone %}<small class="text-danger">{{error}}</small> {% endfor %}
+			</div>
+
+			<hr>
+			
+			<div class="form-group">
+				<button class="btn btn-success btn-block">Save</button>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="p-2">
+    <h2>
+        Pricing Categories
+        <a href="{{url_for('pricing_category_bp.register_pricing_category')}}" class="btn btn-success float-right shadow"><span class="fa fa-plus"></span></a>
+    </h2>
+    <hr>
+    <div class="d-flex flex-row flex-nowrap align-items-stretch" style="overflow-x: auto;">
+        {% for pricing_category in pricing_categories %}
+        <div class="px-2">
+            {% include 'pricing_category/pricing-category-card.html' %}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if pricing_categories|length == 0 %}
+        <div class="container" align="center">
+            <label class="display-4 text-muted">No pricing categories in the system!</label>
+        </div>            
+    {% endif %}
+</div>
+{% endblock %}

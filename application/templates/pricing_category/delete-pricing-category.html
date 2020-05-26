@@ -1,0 +1,24 @@
+{% extends 'pricing_category/pricing-category.html' %}
+
+{% block content %}
+<div>
+	<form action="" method="POST">
+		<div class="p-2">
+			<h2>Delete Pricing Category</h2>
+			{{form.hidden_tag()}}
+			<hr>
+			{{form.id()}}
+			<p>This pricing category is being used by {{pricing_category.rooms|length}} rooms. If you delete, these rooms will loose their pricing information.</p>
+
+			<p>Are you sure you want to delete this pricing category?</p>
+
+			<hr>
+			
+			<div class="form-group" align="right">
+				<a href="{{url_for('pricing_category_bp.edit_pricing_category', id=pricing_category.id)}}" class="btn btn-secondary">No Cancel</a>
+				{{form.submit(class="btn btn-danger")}}
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

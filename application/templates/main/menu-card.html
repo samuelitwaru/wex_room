@@ -1,0 +1,11 @@
+<div style="width: 18rem;" class="login-content">
+	<h3 align="center">Room Management System</h3>
+	<!-- <img src="{{ url_for('static', filename='/img/tmp-logo.png') }}" class="card-img-top fa fa-cart-plus" alt=""> -->
+	<div class="card-body p-2">
+		<a href="{{url_for('room_bp.get_rooms')}}" class="btn btn-primary btn-block">Rooms</a>
+		<a href="{{url_for('pricing_category_bp.get_pricing_categories')}}" class="btn btn-primary btn-block">Pricing</a>
+		<a href="{{url_for('booking_bp.get_bookings')}}" class="btn btn-primary btn-block">Bookings</a>
+		<a href="{{url_for('payment_bp.get_payments')}}" class="btn btn-primary btn-block">Payments</a>
+		<a href="{{url_for('customer_bp.get_customers')}}" class="btn btn-primary btn-block">Customers</a>
+	</div>
+</div>

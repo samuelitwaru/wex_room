@@ -1,0 +1,13 @@
+
+<div class="card" style="width: 18rem;">
+	<img src="{{ url_for('static', filename='/img/samuelitwaru.jpeg') }}" class="card-img-top fa fa-cart-plus" alt="">
+	<div class="card-body p-2">
+		<h4>{{customer.full_name}}</h4>
+		<p class="m-0">{{customer.telephone}}</p>
+		<small>{{customer.email}}</small>
+		<hr>
+		<a href="" class="btn btn-primary btn-block">Bookings</a>
+		<a href="{{url_for('customer_bp.edit_customer', id=customer.id)}}" class="btn btn-info btn-block">Edit</a>
+		<a href="{{url_for('customer_bp.delete_customer', id=customer.id)}}" class="btn btn-danger btn-block">Delete</a>
+	</div>
+</div>

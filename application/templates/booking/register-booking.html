@@ -1,0 +1,67 @@
+{% extends 'room/room.html' %}
+
+{% block content %}
+<div>
+	<form action="" method="POST">
+		<div class="p-2">
+			<h2>Book Room</h2>
+			<hr>
+			<p class="text-center">Booking <strong>{{room.name}}</strong></p>
+			<hr>
+			{{form.hidden_tag()}}
+			<div class="form-group">
+				<label>{{form.customer_id.label}}</label>
+				{{form.customer_id(class="form-control", size="5")}}
+				{% for error in form.errors.customer_id %}<small class="text-danger">{{error}}</small> {% endfor %}
+			</div>
+
+			<div class="form-group">
+				<label>{{form.pricing_period.label}}</label>
+				{{form.pricing_period(class="form-control", size="3", id="periodSelector")}}
+				{% for error in form.errors.pricing_period %}<small class="text-danger">{{error}}</small> {% endfor %}
+                <script type="text/javascript">
+                	$("#periodSelector").on('change', (event)=>{
+                		switch (event.target.value) {
+                			case "day":
+                				$('.period-label').html('days')
+                				break;
+                			case "week":
+                				$('.period-label').html('weeks')
+                				break;
+                			case "month":
+                				$('.period-label').html('months')
+                				break;
+                		}
+                	})
+                </script>
+			</div>
+
+			<div class="form-group">
+				<label>Period</label>
+				<div class="row border m-0 pb-2 bg-light">
+					<div class="col-md-6">
+						<small>How many <span class="period-label">days</span>?</small>
+						<div class="input-group mb-2 mr-sm-2">
+							<!-- <input type="number" class="form-control"> -->
+							{{form.period(type="number", class="form-control")}}
+							<div class="input-group-append">
+								<div class="input-group-text"><span class="period-label">days</span></div>
+							</div>
+						</div>
+						{% for error in form.errors.period %}<small class="text-danger">{{error}}</small> {% endfor %}
+					</div>
+					<div class="col-md-6">
+						<small>{{form.checkin_date.label}}</small>
+						{{form.checkin_date(class="form-control", type="date")}}
+						{% for error in form.errors.checkin_date %}<small class="text-danger">{{error}}</small> {% endfor %}
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group">
+				<button class="btn btn-block btn-success"> Book</button>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}
