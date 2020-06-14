@@ -1,14 +1,17 @@
 from flask import Flask
 from application import configuration
 from flask_sqlalchemy import SQLAlchemy
+# import flask_whooshalchemy as whooshalchemy
+from flask_whooshee import Whooshee
 
 app = Flask(__name__)
 
 app.config.from_object(configuration.DevelopmentConfig)
 
 db = SQLAlchemy(app)
+whooshee = Whooshee(app)
 
-from application.filters import *
+from application.filters.template_filters import *
 
 
 from application.views.main import main_bp

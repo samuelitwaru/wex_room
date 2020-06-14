@@ -42,7 +42,6 @@
 					<div class="col-md-6">
 						<small>How many <span class="period-label">days</span>?</small>
 						<div class="input-group mb-2 mr-sm-2">
-							<!-- <input type="number" class="form-control"> -->
 							{{form.period(type="number", class="form-control")}}
 							<div class="input-group-append">
 								<div class="input-group-text"><span class="period-label">days</span></div>
@@ -51,7 +50,7 @@
 						{% for error in form.errors.period %}<small class="text-danger">{{error}}</small> {% endfor %}
 					</div>
 					<div class="col-md-6">
-						<small>{{form.checkin_date.label}}</small>
+						<small>{{form.checkin_date.label(class="mb-0")}}</small>
 						{{form.checkin_date(class="form-control", type="date")}}
 						{% for error in form.errors.checkin_date %}<small class="text-danger">{{error}}</small> {% endfor %}
 					</div>

@@ -1,0 +1,13 @@
+<form method="GET" action="">
+	<h2>Filter Room</h2>
+		<hr>
+		{{filter_form.hidden_tag()}}
+		<div class="form-group">
+			<label>{{filter_form.pricing_category_id.label}}</label>
+			{{filter_form.pricing_category_id(class="form-control")}}
+			{% for error in filter_form.errors.pricing_category_id %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+		<div class="form-group">
+			{{filter_form.submit(class="btn btn-success float-right")}}
+		</div>
+</form>

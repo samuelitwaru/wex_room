@@ -4,7 +4,7 @@
 <div>
 	<form action="" method="POST">
 		<div class="p-2">
-			<h2>Make Payment</h2>
+			<h2>Payment</h2>
 			<hr>
 
 			{{form.hidden_tag()}}
@@ -25,7 +25,7 @@
 		        	{% endfor %}
 		        	{% if booking.payments|length == 0 %}
 		        	<tr align="center">
-		        		<td colspan="2">No payments made</td>
+		        		<td colspan="2" class="text-danger">No payments made</td>
 		        	</tr>
 		        	{% endif %}
 		        	<tr>
@@ -40,6 +40,7 @@
 			</table>
 
 			<div class="form-group p-2 card bg-light">
+				{{form.booking_id(hidden="true", type="number")}}
 				<label>{{form.amount.label}} <span class="text-danger">*</span></label>
 				{{form.amount(class="form-control", type="number")}}
 				{% for error in form.errors.amount %}<small class="text-danger">{{error}}</small> {% endfor %}

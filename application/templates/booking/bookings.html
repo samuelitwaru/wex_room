@@ -5,7 +5,19 @@
     <h2>
         Bookings
         <button class="btn btn-success float-right" data-toggle="modal" data-target="#newBookingModal"><span class="fa fa-check-square-o">&plus;</span></button>
+        <button data-toggle="modal" data-target="#filterBookingFormModal" class="btn btn-success float-right mr-1"><span class="fa fa-filter"></span></button>
     </h2>
+
+    <!-- Modal -->
+    <div class="modal fade" id="filterBookingFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    {% include 'booking/filter-booking.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Modal -->
     <div class="modal fade" id="newBookingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -75,7 +87,7 @@
 
     {% if bookings|length == 0 %}
         <div class="container" align="center">
-            <label class="display-4 text-muted">No bookings in the system!</label>
+            <label class="display-4 text-muted">No bookings!</label>
         </div>            
     {% endif %}
 </div>

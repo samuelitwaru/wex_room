@@ -1,11 +1,11 @@
-	<div class="card" style="width: 18rem;">
+	<div class="card shadow" style="width: 18rem;">
 		<div class="card-body p-2">
 			<h4>{{pricing_category.name}}</h4>
 			<p>{{pricing_category.description}}</p>
 			<hr>
-			<p>{{pricing_category.price_per_day}} Per Day</p>
-			<p>{{pricing_category.price_per_day}} Per Week</p>
-			<p>{{pricing_category.price_per_day}} Per Month</p>
+			<p>{{pricing_category.price_per_day|comma_separator or '(Not set)'}} Per Day</p>
+			<p>{{pricing_category.price_per_week|comma_separator or '(Not set)'}} Per Week</p>
+			<p>{{pricing_category.price_per_month|comma_separator or '(Not set)'}} Per Month</p>
 			<hr>
 			<a href="{{url_for('pricing_category_bp.edit_pricing_category', id=pricing_category.id)}}" class="btn btn-info btn-block">Edit</a>
 			<a href="{{url_for('pricing_category_bp.delete_pricing_category', id=pricing_category.id)}}" class="btn btn-danger btn-block">Delete</a>

@@ -1,13 +1,34 @@
+# import flask_sqlalchemy.sql.functions
+from application import app
 from application import db
+from application import whooshee
 from datetime import datetime, timedelta
 
+
+@whooshee.register_model('name')
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     pricing_category_id = db.Column(db.Integer, db.ForeignKey("pricing_category.id"))
     bookings = db.relationship("Booking", backref="room")
 
-    
+    def latest_booking(self):
+        # filter booking where room_id == self.id and book_date is max
+        return Booking.query.filter_by(room_id=self.id).order_by(db.desc(Booking.book_date)).first()
+
+    def status(self):
+        # get latest booking and determine room status
+        now = datetime.utcnow()
+        booking = self.latest_booking()
+        if booking:
+            if booking.book_date < now < booking.checkin_date: 
+                return "BOOKED"
+            elif booking.checkin_date < now < booking.checkout_date(): 
+                return "OCCUPIED"
+        return "FREE"
+
+
+@whooshee.register_model('full_name', 'email', 'telephone')
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String())
@@ -22,7 +43,6 @@ class Booking(db.Model):
     book_number = db.Column(db.String())
     book_date = db.Column(db.DateTime())
     checkin_date = db.Column(db.DateTime())
-    checkout_date = db.Column(db.DateTime())
     period = db.Column(db.Integer())
     pricing_period = db.Column(db.String())
     price_per_period = db.Column(db.Integer())
@@ -39,6 +59,9 @@ class Booking(db.Model):
         elif self.pricing_period == "month": period = self.period*30
         return self.checkin_date+timedelta(period)
 
+    def balance(self):
+        return (self.price_per_period*self.period) - self.total_paid()
+        
     
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

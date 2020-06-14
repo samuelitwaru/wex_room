@@ -2,6 +2,8 @@ class BaseConfig(object):
     """Base config class"""
     SECRET_KEY = 'AasHy7I8484K8I32seu7nni8YHHu6786gi'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    WHOOSH_BASE = 'database'
+    WHOOSHEE_MIN_STRING_LEN = 1
 
 
 class ProductionConfig(BaseConfig):

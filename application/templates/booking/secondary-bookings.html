@@ -1,0 +1,55 @@
+{% extends parent_template %}
+
+{% block content %}
+
+<div class="p-2">
+    <h3>
+        Bookings
+    </h3>
+
+    <hr>
+	
+    <table class="table table-responsive-sm border">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+                <th scope="col">Checkin</th>
+                <th scope="col">Checkout</th>
+                <th scope="col">Payments</th>
+                <th scope="col">...</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for booking in bookings %}
+            	<tr>
+            		<td>{{booking.id}}</td>
+            		<td>{{booking.room.name}}</td>
+                    <td>{{booking.book_date|format_date}}</td>
+                    <td>{{booking.checkin_date|format_date}}</td>
+                    <td>{{booking.checkout_date()|format_date}}</td>
+            		<td>{{booking.total_paid()|comma_separator}}</td>
+            		<td>
+    					<div class="dropdown dropright">
+    						<button class="btn btn-sm btn-secondary fa fa-navicon shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+    						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{url_for('payment_bp.register_payment', booking_id=booking.id)}}">Payment</a>
+    							<a class="dropdown-item" href="{{url_for('booking_bp.edit_booking', id=booking.id)}}">Edit</a>
+    							<a class="dropdown-item" href="{{url_for('booking_bp.delete_booking', id=booking.id)}}">Delete</a>
+    						</div>
+    					</div>
+            		</td>
+            	</tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if bookings|length == 0 %}
+        <div class="container" align="center">
+            <label class="display-4 text-muted">No bookings!</label>
+        </div>            
+    {% endif %}
+</div>
+{% endblock %}

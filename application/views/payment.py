@@ -16,6 +16,7 @@ def get_payments():
 def register_payment(booking_id):
 	booking = Booking.query.get(booking_id)
 	form = RegisterPaymentForm()
+	form.booking_id.data = booking_id
 	if form.validate_on_submit():
 		# get request parameters
 		amount = request.form.get("amount")

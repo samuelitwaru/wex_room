@@ -8,7 +8,11 @@ customer_bp = Blueprint('customer_bp', __name__, url_prefix="/customer")
 
 @customer_bp.route("/")
 def get_customers():
-	customers = Customer.query.all()
+	query = request.args.get('query') 
+	if query:
+		customers = Customer.query.whooshee_search(query).all()
+	else:
+		customers = Customer.query.all()
 	return render_template('customer/customers.html', customers=customers)
 
 
@@ -58,3 +62,11 @@ def delete_customer(id):
 		db.session.commit()
 		return redirect(url_for('customer_bp.get_customers'))
 	return render_template('customer/delete-customer.html', form=form, customer=customer)
+
+
+# secondary routes
+@customer_bp.route("/<id>/bookings")
+def get_customer_bookings(id):
+	customer = Customer.query.get(id)
+	bookings = customer.bookings
+	return render_template('booking/secondary-bookings.html', parent_template='customer/customer.html', customer=customer, bookings=bookings)

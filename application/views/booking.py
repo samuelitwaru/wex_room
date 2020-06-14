@@ -1,29 +1,53 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from application.database.models import Booking, db, Room, Customer
-from application.forms.booking import RegisterBookingForm, EditBookingForm, DeleteBookingForm, SelectRoomForm
+from application.forms.booking import RegisterBookingForm, EditBookingForm, DeleteBookingForm, FilterBookingForm, SelectRoomForm
 from datetime import datetime
-from application.utilities import convert_date_from_html
+from application.utilities import convert_date_from_html, get_pricing_choices
+from application.guards.data import allow_unbooked_room
+from application.filters.model_filters import filter_booking
 
 booking_bp = Blueprint('booking_bp', __name__, url_prefix="/booking")
 
 
 @booking_bp.route("/", methods=["POST", "GET"])
 def get_bookings():
-	bookings = Booking.query.all()
+	filter_form = FilterBookingForm(request.args)
+	filter_form.customer_id.choices = [("", "All")]+[(customer.id, customer.full_name) for customer in Customer.query.all()]
+	filter_form.room_id.choices = [("", "All")]+[(room.id, room.name) for room in Room.query.all()]
+
+	# get request args
+	book_date_gte = request.args.get('book_date_gte')	
+	book_date_lte = request.args.get('book_date_lte')
+	checkin_date_gte = request.args.get('checkin_date_gte')	
+	checkin_date_lte = request.args.get('checkin_date_lte')	
+	customer_id = request.args.get('customer_id')	
+	room_id = request.args.get('room_id')
+
+	# if filtering: filter code
+	if book_date_gte or book_date_lte or checkin_date_gte or checkin_date_lte or customer_id or room_id:
+		bookings = filter_booking(book_date_gte=book_date_gte, book_date_lte=book_date_lte,
+			checkin_date_gte=checkin_date_gte, checkin_date_lte=checkin_date_lte,
+			customer_id=customer_id, room_id=room_id
+			)
+	# if not filtering
+	else:
+		bookings = Booking.query.all()
+	
 	form = SelectRoomForm()
 	form.room_id.choices = [(room.id, room.name) for room in Room.query.all()]
 	if form.validate_on_submit():
 		return redirect(url_for('booking_bp.register_booking', room_id=request.form.get("room_id")))
 
-	return render_template('booking/bookings.html', bookings=bookings, form=form)
+	return render_template('booking/bookings.html', bookings=bookings, form=form, filter_form=filter_form)
 
 
 @booking_bp.route("/register/<room_id>", methods=['GET', 'POST'])
+@allow_unbooked_room
 def register_booking(room_id):
 	room = Room.query.get(room_id)
 	form = RegisterBookingForm()
 	form.customer_id.choices = [(customer.id, customer.full_name) for customer in Customer.query.all()]
-	form.pricing_period.choices = [("day", f"{room.pricing_category.price_per_day} per day"), ("week", f"{room.pricing_category.price_per_week} per week"), ("month", f"{room.pricing_category.price_per_month} per month")]
+	form.pricing_period.choices = get_pricing_choices(room)
 
 	if form.validate_on_submit():
 		# get request parameters
@@ -49,7 +73,7 @@ def edit_booking(id):
 	room = booking.room
 	form = EditBookingForm(obj=booking)
 	form.customer_id.choices = [(customer.id, customer.full_name) for customer in Customer.query.all()]
-	form.pricing_period.choices = [("day", f"{room.pricing_category.price_per_day} per day"), ("week", f"{room.pricing_category.price_per_week} per week"), ("month", f"{room.pricing_category.price_per_month} per month")]
+	form.pricing_period.choices = get_pricing_choices(room)
 
 	if form.validate_on_submit():
 		# get request parameters

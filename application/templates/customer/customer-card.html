@@ -6,7 +6,7 @@
 		<p class="m-0">{{customer.telephone}}</p>
 		<small>{{customer.email}}</small>
 		<hr>
-		<a href="" class="btn btn-primary btn-block">Bookings</a>
+		<a href="{{url_for('customer_bp.get_customer_bookings', id=customer.id)}}" class="btn btn-primary btn-block">Bookings</a>
 		<a href="{{url_for('customer_bp.edit_customer', id=customer.id)}}" class="btn btn-info btn-block">Edit</a>
 		<a href="{{url_for('customer_bp.delete_customer', id=customer.id)}}" class="btn btn-danger btn-block">Delete</a>
 	</div>

@@ -1,0 +1,44 @@
+<form method="GET" action="">
+	<h2>Filter Booking</h2>
+		<hr>
+		{{filter_form.hidden_tag()}}
+		<div class="form-group">
+			<small>{{filter_form.book_date_gte.label}}</small>
+			{{filter_form.book_date_gte(class="form-control", type="date")}}
+			{% for error in filter_form.errors.book_date_gte %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+
+		<div class="form-group">
+			<small>{{filter_form.book_date_gte.label}}</small>
+			{{filter_form.book_date_lte(class="form-control", type="date")}}
+			{% for error in filter_form.errors.book_date_gte %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+
+		<div class="form-group">
+			<small>{{filter_form.checkin_date_gte.label}}</small>
+			{{filter_form.checkin_date_gte(class="form-control", type="date")}}
+			{% for error in filter_form.errors.checkin_date_gte %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+
+		<div class="form-group">
+			<small>{{filter_form.checkin_date_lte.label}}</small>
+			{{filter_form.checkin_date_lte(class="form-control", type="date")}}
+			{% for error in filter_form.errors.checkin_date_lte %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+
+		<div class="form-group">
+			<small>{{filter_form.customer_id.label}}</small>
+			{{filter_form.customer_id(class="form-control")}}
+			{% for error in filter_form.errors.customer_id %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+
+		<div class="form-group">
+			<small>{{filter_form.room_id.label}}</small>
+			{{filter_form.room_id(class="form-control")}}
+			{% for error in filter_form.errors.room_id %}<small class="text-danger">{{error}}</small> {% endfor %}
+		</div>
+
+		<div class="form-group">
+			{{filter_form.submit(class="btn btn-success float-right")}}
+		</div>
+</form>

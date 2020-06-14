@@ -4,9 +4,20 @@
 <div class="p-2">
     <h2 class="my-auto">
         Customers
+        
         <a href="{{url_for('customer_bp.register_customer')}}" class="btn btn-success float-right"><span class="fa fa-user-plus"></span></a>
+        <button id="searchToggle" data-toggle="collapse" data-target="#searchForm" class="btn btn-success float-right mx-1"><span class="fa fa-search"></span></button>
     </h2>
-    <hr>
+    
+    <form id="searchForm" class="collapse" method="GET" action="">
+        <div class="input-group mb-2">
+            <input type="text" name="query" class="card p-2" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-success btn-block">Search</div>
+            </div>
+        </div>
+    </form>
+
 	<table class="table table-responsive-sm border">
         <thead>
             <tr>
@@ -27,7 +38,7 @@
                     <div class="dropdown dropright">
                         <button class="btn btn-sm btn-secondary fa fa-navicon shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Bookings</a>
+                            <a class="dropdown-item" href="{{url_for('customer_bp.get_customer_bookings', id=customer.id)}}">Bookings</a>
                             <a class="dropdown-item" href="{{url_for('customer_bp.edit_customer', id=customer.id)}}">Edit</a>
                             <a class="dropdown-item" href="{{url_for('customer_bp.delete_customer', id=customer.id)}}">Delete</a>
                         </div>
@@ -40,7 +51,7 @@
 
     {% if customers|length == 0 %}
         <div class="container" align="center">
-            <label class="display-4 text-muted">No customers in the system!</label>
+            <label class="display-4 text-muted">No customers!</label>
         </div>            
     {% endif %}
 </div>
